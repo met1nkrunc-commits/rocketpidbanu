@@ -26,7 +26,8 @@ body {
 }
 
 button,
-input {
+input,
+output {
   font: inherit;
 }
 
@@ -133,10 +134,14 @@ main {
 
 .field {
   display: grid;
-  gap: 5px;
+  gap: 8px;
 }
 
 .field label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
   color: #8a9db5;
   font-size: 11px;
   font-weight: 800;
@@ -146,12 +151,60 @@ main {
 
 input {
   width: 100%;
-  min-height: 36px;
-  padding: 0 10px;
+}
+
+input[type="range"] {
+  appearance: none;
+  min-height: 22px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 7px;
+  border: 1px solid rgba(0, 184, 255, 0.18);
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(0, 184, 255, 0.35), rgba(0, 232, 144, 0.2));
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  border: 2px solid #dff8ff;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 18px rgba(0, 184, 255, 0.35);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 7px;
   border: 1px solid #1e2c3a;
-  border-radius: 6px;
-  background: #080c12;
-  color: #d4dde8;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(0, 184, 255, 0.35), rgba(0, 232, 144, 0.2));
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #dff8ff;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+output {
+  min-width: 58px;
+  color: var(--accent);
+  font-family: ui-monospace, "Cascadia Code", "Courier New", monospace;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-align: right;
+  text-transform: none;
 }
 
 .grid-2,

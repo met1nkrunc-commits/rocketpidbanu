@@ -56,20 +56,20 @@ app.innerHTML = `
           <h2>Görev</h2>
           <div class="grid-2">
             <div class="field">
-              <label for="targetAltitude">Başlangıç irtifası (m)</label>
-              <input id="targetAltitude" type="number" min="80" max="500" step="10" value="280" />
+              <label for="targetAltitude"><span>Başlangıç irtifası</span><output id="vTargetAltitude">280 m</output></label>
+              <input id="targetAltitude" type="range" min="80" max="500" step="10" value="280" />
             </div>
             <div class="field">
-              <label for="wind">Yatay rüzgar (m/s²)</label>
-              <input id="wind" type="number" min="-5" max="5" step="0.1" value="0.7" />
+              <label for="wind"><span>Yatay rüzgar</span><output id="vWind">0.7 m/s²</output></label>
+              <input id="wind" type="range" min="-5" max="5" step="0.1" value="0.7" />
             </div>
             <div class="field">
-              <label for="mass">Kuru kütle (kg)</label>
-              <input id="mass" type="number" min="800" max="4000" step="50" value="1550" />
+              <label for="mass"><span>Kuru kütle</span><output id="vMass">1550 kg</output></label>
+              <input id="mass" type="range" min="800" max="4000" step="50" value="1550" />
             </div>
             <div class="field">
-              <label for="fuel">Yakıt (%)</label>
-              <input id="fuel" type="number" min="10" max="100" step="5" value="100" />
+              <label for="fuel"><span>Yakıt</span><output id="vFuel">100%</output></label>
+              <input id="fuel" type="range" min="10" max="100" step="5" value="100" />
             </div>
           </div>
           <div id="status" class="status">Hazır. PID iniş denemesi için Başlat'a basın.</div>
@@ -78,27 +78,27 @@ app.innerHTML = `
         <section class="control-group">
           <h2>İrtifa PID</h2>
           <div class="grid-3">
-            <div class="field"><label for="altKp">Kp</label><input id="altKp" type="number" min="0" max="2" step="0.01" value="0.82" /></div>
-            <div class="field"><label for="altKi">Ki</label><input id="altKi" type="number" min="0" max="0.2" step="0.005" value="0.035" /></div>
-            <div class="field"><label for="altKd">Kd</label><input id="altKd" type="number" min="0" max="3" step="0.01" value="1.25" /></div>
+            <div class="field"><label for="altKp"><span>Kp</span><output id="vAltKp">0.82</output></label><input id="altKp" type="range" min="0" max="2" step="0.01" value="0.82" /></div>
+            <div class="field"><label for="altKi"><span>Ki</span><output id="vAltKi">0.035</output></label><input id="altKi" type="range" min="0" max="0.2" step="0.005" value="0.035" /></div>
+            <div class="field"><label for="altKd"><span>Kd</span><output id="vAltKd">1.25</output></label><input id="altKd" type="range" min="0" max="3" step="0.01" value="1.25" /></div>
           </div>
         </section>
 
         <section class="control-group">
           <h2>Yatay Konum PID</h2>
           <div class="grid-3">
-            <div class="field"><label for="latKp">Kp</label><input id="latKp" type="number" min="0" max="1" step="0.01" value="0.11" /></div>
-            <div class="field"><label for="latKi">Ki</label><input id="latKi" type="number" min="0" max="0.1" step="0.002" value="0.006" /></div>
-            <div class="field"><label for="latKd">Kd</label><input id="latKd" type="number" min="0" max="2" step="0.01" value="0.48" /></div>
+            <div class="field"><label for="latKp"><span>Kp</span><output id="vLatKp">0.11</output></label><input id="latKp" type="range" min="0" max="1" step="0.01" value="0.11" /></div>
+            <div class="field"><label for="latKi"><span>Ki</span><output id="vLatKi">0.006</output></label><input id="latKi" type="range" min="0" max="0.1" step="0.002" value="0.006" /></div>
+            <div class="field"><label for="latKd"><span>Kd</span><output id="vLatKd">0.48</output></label><input id="latKd" type="range" min="0" max="2" step="0.01" value="0.48" /></div>
           </div>
         </section>
 
         <section class="control-group">
           <h2>Açı Stabilizasyon PID</h2>
           <div class="grid-3">
-            <div class="field"><label for="angKp">Kp</label><input id="angKp" type="number" min="0" max="12" step="0.1" value="5.6" /></div>
-            <div class="field"><label for="angKi">Ki</label><input id="angKi" type="number" min="0" max="1" step="0.01" value="0.12" /></div>
-            <div class="field"><label for="angKd">Kd</label><input id="angKd" type="number" min="0" max="8" step="0.1" value="3.2" /></div>
+            <div class="field"><label for="angKp"><span>Kp</span><output id="vAngKp">5.6</output></label><input id="angKp" type="range" min="0" max="12" step="0.1" value="5.6" /></div>
+            <div class="field"><label for="angKi"><span>Ki</span><output id="vAngKi">0.12</output></label><input id="angKi" type="range" min="0" max="1" step="0.01" value="0.12" /></div>
+            <div class="field"><label for="angKd"><span>Kd</span><output id="vAngKd">3.2</output></label><input id="angKd" type="range" min="0" max="8" step="0.1" value="3.2" /></div>
           </div>
         </section>
 
@@ -168,15 +168,28 @@ const elements = {
   wind: document.querySelector<HTMLInputElement>("#wind")!,
   mass: document.querySelector<HTMLInputElement>("#mass")!,
   fuel: document.querySelector<HTMLInputElement>("#fuel")!,
+  vTargetAltitude: document.querySelector<HTMLOutputElement>("#vTargetAltitude")!,
+  vWind: document.querySelector<HTMLOutputElement>("#vWind")!,
+  vMass: document.querySelector<HTMLOutputElement>("#vMass")!,
+  vFuel: document.querySelector<HTMLOutputElement>("#vFuel")!,
   altKp: document.querySelector<HTMLInputElement>("#altKp")!,
   altKi: document.querySelector<HTMLInputElement>("#altKi")!,
   altKd: document.querySelector<HTMLInputElement>("#altKd")!,
+  vAltKp: document.querySelector<HTMLOutputElement>("#vAltKp")!,
+  vAltKi: document.querySelector<HTMLOutputElement>("#vAltKi")!,
+  vAltKd: document.querySelector<HTMLOutputElement>("#vAltKd")!,
   latKp: document.querySelector<HTMLInputElement>("#latKp")!,
   latKi: document.querySelector<HTMLInputElement>("#latKi")!,
   latKd: document.querySelector<HTMLInputElement>("#latKd")!,
+  vLatKp: document.querySelector<HTMLOutputElement>("#vLatKp")!,
+  vLatKi: document.querySelector<HTMLOutputElement>("#vLatKi")!,
+  vLatKd: document.querySelector<HTMLOutputElement>("#vLatKd")!,
   angKp: document.querySelector<HTMLInputElement>("#angKp")!,
   angKi: document.querySelector<HTMLInputElement>("#angKi")!,
   angKd: document.querySelector<HTMLInputElement>("#angKd")!,
+  vAngKp: document.querySelector<HTMLOutputElement>("#vAngKp")!,
+  vAngKi: document.querySelector<HTMLOutputElement>("#vAngKi")!,
+  vAngKd: document.querySelector<HTMLOutputElement>("#vAngKd")!,
   mAltitude: document.querySelector<HTMLElement>("#mAltitude")!,
   mVelocity: document.querySelector<HTMLElement>("#mVelocity")!,
   mThrottle: document.querySelector<HTMLElement>("#mThrottle")!,
@@ -224,16 +237,46 @@ animate();
 
 function bindEvents() {
   elements.startStop.addEventListener("click", () => {
-    running = !running;
-    elements.startStop.textContent = running ? "Durdur" : "Başlat";
-    if (running && (state.landed || state.crashed)) {
-      resetSimulation();
-      running = true;
-      elements.startStop.textContent = "Durdur";
+    if (running) {
+      running = false;
+      elements.startStop.textContent = "Başlat";
+      setStatus("Simülasyon duraklatıldı.");
+      return;
     }
+
+    if (state.time === 0 || state.landed || state.crashed) {
+      prepareDescentScenario();
+    }
+
+    running = true;
+    elements.startStop.textContent = "Durdur";
   });
 
   elements.reset.addEventListener("click", resetSimulation);
+  const sliders = [
+    elements.targetAltitude,
+    elements.wind,
+    elements.mass,
+    elements.fuel,
+    elements.altKp,
+    elements.altKi,
+    elements.altKd,
+    elements.latKp,
+    elements.latKi,
+    elements.latKd,
+    elements.angKp,
+    elements.angKi,
+    elements.angKd
+  ];
+  for (const slider of sliders) {
+    slider.addEventListener("input", () => {
+      updateControlReadouts();
+      if (!running && state.time === 0 && state.altitude <= 0.05) {
+        state.fuel = readNumber(elements.fuel);
+        updateUi();
+      }
+    });
+  }
   elements.camOrbit.addEventListener("click", () => setCameraMode("orbit"));
   elements.camSide.addEventListener("click", () => setCameraMode("side"));
   elements.camTop.addEventListener("click", () => setCameraMode("top"));
@@ -266,18 +309,53 @@ function resetSimulation() {
   elements.startStop.textContent = "Başlat";
   state = {
     ...initialState(),
-    altitude: readNumber(elements.targetAltitude),
+    altitude: 0,
     fuel: readNumber(elements.fuel),
-    lateral: START_LATERAL
+    lateral: 0,
+    lateralVelocity: 0
   };
   history = [state];
   resetPid(altPid);
   resetPid(latPid);
   resetPid(angPid);
+  updateControlReadouts();
   updateRocketVisual();
   updateUi();
   drawCharts();
-  setStatus("Hazır. PID iniş denemesi için Başlat'a basın.");
+  setStatus("Roket pistte hazır. Başlat, seçilen irtifadan iniş senaryosunu başlatır.");
+}
+
+function prepareDescentScenario() {
+  state = {
+    ...initialState(),
+    altitude: readNumber(elements.targetAltitude),
+    fuel: readNumber(elements.fuel),
+    lateral: START_LATERAL,
+    lateralVelocity: 1.2
+  };
+  history = [state];
+  resetPid(altPid);
+  resetPid(latPid);
+  resetPid(angPid);
+  updateUi();
+  drawCharts();
+  setStatus("İniş senaryosu başlatıldı: roket seçilen irtifadan piste dönmeye çalışıyor.");
+}
+
+function updateControlReadouts() {
+  elements.vTargetAltitude.textContent = `${readNumber(elements.targetAltitude).toFixed(0)} m`;
+  elements.vWind.textContent = `${readNumber(elements.wind).toFixed(1)} m/s²`;
+  elements.vMass.textContent = `${readNumber(elements.mass).toFixed(0)} kg`;
+  elements.vFuel.textContent = `${readNumber(elements.fuel).toFixed(0)}%`;
+  elements.vAltKp.textContent = readNumber(elements.altKp).toFixed(2);
+  elements.vAltKi.textContent = readNumber(elements.altKi).toFixed(3);
+  elements.vAltKd.textContent = readNumber(elements.altKd).toFixed(2);
+  elements.vLatKp.textContent = readNumber(elements.latKp).toFixed(2);
+  elements.vLatKi.textContent = readNumber(elements.latKi).toFixed(3);
+  elements.vLatKd.textContent = readNumber(elements.latKd).toFixed(2);
+  elements.vAngKp.textContent = readNumber(elements.angKp).toFixed(1);
+  elements.vAngKi.textContent = readNumber(elements.angKi).toFixed(2);
+  elements.vAngKd.textContent = readNumber(elements.angKd).toFixed(1);
 }
 
 function initThreeScene() {
@@ -540,7 +618,7 @@ function landingVelocityProfile(altitude: number) {
 
 function updateRocketVisual() {
   const scale = 1.0;
-  rocket.position.set(state.lateral, Math.max(state.altitude, 0) * 0.72 + 2, 0);
+  rocket.position.set(state.lateral, Math.max(state.altitude, 0) * 0.72 + 1, 0);
   rocket.rotation.z = -state.angle;
   rocket.scale.setScalar(scale);
 
