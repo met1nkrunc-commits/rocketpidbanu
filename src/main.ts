@@ -588,6 +588,10 @@ function stepSimulation(dt: number) {
   state.acceleration = verticalAcceleration;
 
   if (state.altitude <= 0.05) {
+    const touchdownVelocity = state.velocity;
+    const touchdownAngle = state.angle;
+    const touchdownLateral = state.lateral;
+    const touchdownDrift = state.lateralVelocity;
     const safeSpeed = Math.abs(state.velocity) <= 2.4;
     const safeTilt = Math.abs(radToDeg(state.angle)) <= 7;
     const safeLateral = Math.abs(state.lateral) <= 6;
@@ -595,9 +599,19 @@ function stepSimulation(dt: number) {
     state.altitude = 0;
     state.landed = safeSpeed && safeTilt && safeLateral && safeDrift;
     state.crashed = !state.landed;
+    state.throttle = 0;
+    state.gimbal = 0;
+    state.acceleration = 0;
+    resetPid(altPid);
+    resetPid(latPid);
+    resetPid(angPid);
     running = false;
     elements.startStop.textContent = "Başlat";
-    setStatus(state.landed ? "Başarılı iniş: hız, açı ve yatay hata limit içinde." : "Sert iniş: PID ayarları veya bozucu koşullar limit dışına çıktı.");
+    setStatus(
+      state.landed
+        ? `Başarılı iniş: temas hızı ${touchdownVelocity.toFixed(1)} m/s, açı ${radToDeg(touchdownAngle).toFixed(1)}°, yatay sapma ${touchdownLateral.toFixed(1)} m. Motor kapandı.`
+        : `Sert iniş: temas hızı ${touchdownVelocity.toFixed(1)} m/s, açı ${radToDeg(touchdownAngle).toFixed(1)}°, yatay sapma ${touchdownLateral.toFixed(1)} m, yatay hız ${touchdownDrift.toFixed(1)} m/s. Motor kapandı.`
+    );
   }
 
   history.push({ ...state });
